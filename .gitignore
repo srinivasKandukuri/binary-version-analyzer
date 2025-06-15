@@ -1,0 +1,90 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+binary-version-analyzer
+pattern-tester
+
+# Test binary
+testdata/
+
+# Go workspace file
+go.work
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go build cache
+.cache/
+
+# IDE files
+.vscode/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries
+.idea/shelf/
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/dbnavigator.xml
+
+# Keep run configurations but ignore personal settings
+.idea/workspace.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# API Keys (security)
+*.key
+api_keys.txt
+secrets.txt
+
+# Log files
+*.log
+logs/
+
+# Test coverage
+*.out
+coverage.html
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Results and output files
+results.json
+results.yaml
+results.txt
+output/
+
+# Build artifacts
+dist/
+build/
+bin/
+
+# Documentation build
+docs/_build/
+
+# Local configuration
+config.local.yaml
+config.local.json 

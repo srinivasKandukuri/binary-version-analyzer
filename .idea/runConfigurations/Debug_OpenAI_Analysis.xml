@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration default="false" name="Debug OpenAI Analysis" type="GoApplicationRunConfiguration" factoryName="Go Application">
+  <module name="binary-version-analyzer" />
+  <working_directory value="$PROJECT_DIR$" />
+  <kind value="PACKAGE" />
+  <package value="binary-version-analyzer" />
+  <directory value="$PROJECT_DIR$" />
+  <filePath value="$PROJECT_DIR$/main.go" />
+  <parameters value="analyze /usr/bin/curl --provider openai --model gpt-4 --temperature 0.2 --verbose" />
+  <envs>
+    <env name="OPENAI_API_KEY" value="your-openai-api-key-here" />
+    <env name="AI_PROVIDER" value="openai" />
+    <env name="AI_MODEL" value="gpt-4" />
+    <env name="AI_TEMPERATURE" value="0.2" />
+    <env name="AI_MAX_TOKENS" value="100" />
+    <env name="AI_TIMEOUT" value="60" />
+  </envs>
+  <EXTENSION ID="net.ashald.envfile">
+    <option name="IS_ENABLED" value="false" />
+    <option name="IS_SUBST" value="false" />
+    <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+    <option name="IS_IGNORE_MISSING_FILES" value="false" />
+    <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+    <ENTRIES>
+      <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+    </ENTRIES>
+  </EXTENSION>
+  <method v="2" />
+</configuration> 

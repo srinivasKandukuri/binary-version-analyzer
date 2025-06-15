@@ -1,0 +1,31 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EXEC" type="GoApplicationRunConfiguration" factoryName="Go Application">
+    <module name="Exec" />
+    <working_directory value="$PROJECT_DIR$" />
+    <go_parameters value="-i" />
+    <parameters value="analyze $USER_HOME$/Downloads/trivy-scanner --verbose --show-patterns" />
+    <envs>
+      <env name="AI_MAX_TOKENS" value="50" />
+      <env name="AI_MODEL" value="llama-3.1-70b-versatile" />
+      <env name="AI_PROVIDER" value="groq" />
+      <env name="AI_TEMPERATURE" value="0.1" />
+      <env name="AI_TIMEOUT" value="30" />
+      <env name="GROQ_API_KEY" value="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" />
+    </envs>
+    <EXTENSION ID="net.ashald.envfile">
+      <option name="IS_ENABLED" value="false" />
+      <option name="IS_SUBST" value="false" />
+      <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+      <option name="IS_IGNORE_MISSING_FILES" value="false" />
+      <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+      <ENTRIES>
+        <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+      </ENTRIES>
+    </EXTENSION>
+    <kind value="PACKAGE" />
+    <package value="binary-version-analyzer" />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$/main.go" />
+    <method v="2" />
+  </configuration>
+</component>

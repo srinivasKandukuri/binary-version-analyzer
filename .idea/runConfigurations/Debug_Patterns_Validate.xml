@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration default="false" name="Debug Patterns Validate" type="GoApplicationRunConfiguration" factoryName="Go Application">
+  <module name="binary-version-analyzer" />
+  <working_directory value="$PROJECT_DIR$" />
+  <kind value="PACKAGE" />
+  <package value="binary-version-analyzer" />
+  <directory value="$PROJECT_DIR$" />
+  <filePath value="$PROJECT_DIR$/main.go" />
+  <parameters value="patterns validate --verbose" />
+  <envs>
+    <env name="GROQ_API_KEY" value="your-groq-api-key-here" />
+  </envs>
+  <EXTENSION ID="net.ashald.envfile">
+    <option name="IS_ENABLED" value="false" />
+    <option name="IS_SUBST" value="false" />
+    <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+    <option name="IS_IGNORE_MISSING_FILES" value="false" />
+    <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+    <ENTRIES>
+      <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+    </ENTRIES>
+  </EXTENSION>
+  <method v="2" />
+</configuration> 
