@@ -282,7 +282,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 🐛 **Bug Reports**: [GitHub Issues](https://github.com/srinivasKandukuri/binary-version-analyzer/issues)
 - 💡 **Feature Requests**: [GitHub Discussions](https://github.com/srinivasKandukuri/binary-version-analyzer/discussions)
-- 📧 **Contact**: srinivas.kandukuri@example.com
+- 📧 **Contact**: ksrinivas.cse@gmail.com
 
 ---
 
