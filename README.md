@@ -70,24 +70,33 @@ binary-version-analyzer
 ## 🎯 Example Output
 
 ```bash
-$ binary-version-analyzer analyze /usr/bin/ls
+$ binary-version-analyzer analyze /home/sk/go/bin/boltbrowser
 
-🔍 Analyzing binary: /usr/bin/ls
+🔧 Initializing configuration...
+🚀 Starting analysis of: /home/sk/go/bin/boltbrowser
+🔍 Analyzing binary: /home/sk/go/bin/boltbrowser
 🤖 Using AI Provider: Groq
 🔧 AI Configuration:
    Provider: groq
-   Model: llama-3.1-70b-versatile
+   Model: gemma2-9b-it
    Temperature: 0.10
    Max Tokens: 50
+   Base URL: https://api.groq.com/openai/v1
+   Timeout: 30s
+   API Key: gsk_E4h1***
+
+🧪 Using 15 version detection patterns
+💡 Run 'binary-version-analyzer patterns list' to see all patterns
 
 📊 Scanning for version candidates...
-✅ Found 3 potential version candidates:
-   1. 8.32
-   2. 2.31
-   3. 1.3.2
+✅ Found 4 potential version candidates:
+   1. 1.3.1
+   2. 0.0.0-20170904143325
+   3. 0.0.4
+   4. 0.0.0-20180819125858
 
 🧠 Analyzing with Groq AI...
-🎯 Most likely version for ls: 8.32
+🎯 Most likely version for boltbrowser: 1.3.1
 ```
 
 ## 🔧 Configuration

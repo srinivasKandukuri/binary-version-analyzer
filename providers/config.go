@@ -22,7 +22,7 @@ type AIConfig struct {
 var DefaultConfigs = map[AIProviderType]AIConfig{
 	ProviderGroq: {
 		Provider:    ProviderGroq,
-		Model:       "llama-3.1-70b-versatile",
+		Model:       "llama-3.3-70b-versatile",
 		Temperature: 0.1,
 		MaxTokens:   50,
 		BaseURL:     "https://api.groq.com/openai/v1",
@@ -30,7 +30,7 @@ var DefaultConfigs = map[AIProviderType]AIConfig{
 	},
 	ProviderOpenAI: {
 		Provider:    ProviderOpenAI,
-		Model:       "gpt-3.5-turbo",
+		Model:       "gpt-4o-mini",
 		Temperature: 0.1,
 		MaxTokens:   50,
 		BaseURL:     "https://api.openai.com/v1",

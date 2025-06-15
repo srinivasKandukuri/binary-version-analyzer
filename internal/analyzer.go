@@ -57,16 +57,53 @@ func (ba *BinaryAnalyzer) ScanBinary(path string) ([]string, error) {
 	var candidates []string
 	candidateSet := make(map[string]bool) // To avoid duplicates
 
-	// Use a larger buffer for binary files and read in chunks
-	const maxBufferSize = 1024 * 1024 // 1MB buffer
+	// Use a much larger buffer for binary files and implement custom split function
+	const maxBufferSize = 4 * 1024 * 1024 // 4MB buffer
 	scanner := bufio.NewScanner(file)
 
-	// Increase the buffer size to handle large binary files
+	// Create a custom buffer with maximum size
 	buf := make([]byte, maxBufferSize)
 	scanner.Buffer(buf, maxBufferSize)
 
-	// Set a custom split function to handle binary data better
-	scanner.Split(bufio.ScanLines)
+	// Use a custom split function that handles extremely long lines gracefully
+	scanner.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
+		if atEOF && len(data) == 0 {
+			return 0, nil, nil
+		}
+
+		// Look for newline
+		if i := strings.IndexByte(string(data), '\n'); i >= 0 {
+			// If line is too long, truncate it
+			if i > 2000 {
+				i = 2000
+			}
+			return i + 1, data[0:i], nil
+		}
+
+		// If we're at EOF, return whatever we have (up to reasonable limit)
+		if atEOF {
+			if len(data) > 2000 {
+				return len(data), data[0:2000], nil
+			}
+			return len(data), data, nil
+		}
+
+		// If buffer is getting too full, process what we have
+		if len(data) > maxBufferSize-1000 {
+			// Find a reasonable break point (space, tab, or just truncate)
+			breakPoint := 2000
+			for i := 1999; i >= 1000; i-- {
+				if data[i] == ' ' || data[i] == '\t' {
+					breakPoint = i
+					break
+				}
+			}
+			return breakPoint, data[0:breakPoint], nil
+		}
+
+		// Request more data
+		return 0, nil, nil
+	})
 
 	lineCount := 0
 	maxLines := 50000 // Limit scanning to prevent excessive processing
@@ -109,8 +146,99 @@ func (ba *BinaryAnalyzer) ScanBinary(path string) ([]string, error) {
 		}
 	}
 
+	// Handle scanner errors more gracefully
 	if err := scanner.Err(); err != nil {
+		// If it's still a "token too long" error, try a different approach
+		if strings.Contains(err.Error(), "token too long") {
+			return ba.scanBinaryChunked(path)
+		}
 		return nil, fmt.Errorf("error scanning file: %v", err)
+	}
+
+	return candidates, nil
+}
+
+// scanBinaryChunked is a fallback method for extremely problematic binary files
+func (ba *BinaryAnalyzer) scanBinaryChunked(path string) ([]string, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, fmt.Errorf("error opening file %s: %v", path, err)
+	}
+	defer file.Close()
+
+	var candidates []string
+	candidateSet := make(map[string]bool)
+
+	// Read file in chunks and process byte by byte
+	const chunkSize = 64 * 1024 // 64KB chunks
+	buffer := make([]byte, chunkSize)
+	var lineBuffer strings.Builder
+	processedBytes := 0
+	maxBytes := 100 * 1024 * 1024 // Process max 100MB
+
+	for processedBytes < maxBytes {
+		n, err := file.Read(buffer)
+		if n == 0 {
+			break
+		}
+		processedBytes += n
+
+		for i := 0; i < n; i++ {
+			b := buffer[i]
+
+			// If we hit a newline or the line gets too long, process it
+			if b == '\n' || lineBuffer.Len() > 1000 {
+				line := lineBuffer.String()
+				lineBuffer.Reset()
+
+				// Process the line if it looks printable
+				if len(line) > 0 && len(line) <= 1000 && isPrintable(line) {
+					for _, pattern := range ba.patterns {
+						matches := pattern.FindAllStringSubmatch(line, -1)
+						for _, match := range matches {
+							if len(match) > 1 {
+								version := strings.TrimSpace(match[1])
+								if isValidVersion(version) && !candidateSet[version] {
+									candidates = append(candidates, version)
+									candidateSet[version] = true
+								}
+							}
+						}
+					}
+				}
+
+				// Early exit if we found enough candidates
+				if len(candidates) >= 20 {
+					return candidates, nil
+				}
+			} else if b >= 32 && b <= 126 {
+				// Only add printable ASCII characters
+				lineBuffer.WriteByte(b)
+			}
+		}
+
+		if err != nil {
+			break
+		}
+	}
+
+	// Process any remaining line
+	if lineBuffer.Len() > 0 {
+		line := lineBuffer.String()
+		if isPrintable(line) {
+			for _, pattern := range ba.patterns {
+				matches := pattern.FindAllStringSubmatch(line, -1)
+				for _, match := range matches {
+					if len(match) > 1 {
+						version := strings.TrimSpace(match[1])
+						if isValidVersion(version) && !candidateSet[version] {
+							candidates = append(candidates, version)
+							candidateSet[version] = true
+						}
+					}
+				}
+			}
+		}
 	}
 
 	return candidates, nil

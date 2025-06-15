@@ -3,10 +3,10 @@
     <module name="Exec" />
     <working_directory value="$PROJECT_DIR$" />
     <go_parameters value="-i" />
-    <parameters value="analyze $USER_HOME$/Downloads/trivy-scanner --verbose --show-patterns" />
+    <parameters value="analyze $PROJECT_DIR$/../../../bin/boltbrowser --verbose --show-patterns" />
     <envs>
       <env name="AI_MAX_TOKENS" value="50" />
-      <env name="AI_MODEL" value="llama-3.1-70b-versatile" />
+      <env name="AI_MODEL" value="llama-3.3-70b-versatile" />
       <env name="AI_PROVIDER" value="groq" />
       <env name="AI_TEMPERATURE" value="0.1" />
       <env name="AI_TIMEOUT" value="30" />
